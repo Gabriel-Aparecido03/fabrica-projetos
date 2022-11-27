@@ -4,18 +4,37 @@
  */
 package fabrica.de.projetos;
 
+import conexao.MySQL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author gabri
  */
 public class VenderTela extends javax.swing.JFrame {
-
+    class ItemCombo {
+        String id;
+        String nome;
+    }
+    
+    MySQL conectar = new MySQL("localhost:3306","DataFarmaBanco","root","123mudar");
+    
+    ArrayList<ItemCombo> listaRemedio = new ArrayList<ItemCombo>();
     /**
      * Creates new form VenderTela
      */
     public VenderTela() {
         initComponents();
+        this.puxarRemedios();
+        this.popularCombo();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,21 +45,132 @@ public class VenderTela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        btnVenderRemedio = new javax.swing.JButton();
+        txtQtdVender = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        comboRemedioVender = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(null);
+
+        btnVenderRemedio.setBackground(new java.awt.Color(38, 53, 99));
+        btnVenderRemedio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnVenderRemedio.setForeground(new java.awt.Color(255, 255, 255));
+        btnVenderRemedio.setText("Vender");
+        btnVenderRemedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderRemedioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnVenderRemedio);
+        btnVenderRemedio.setBounds(180, 220, 240, 51);
+
+        txtQtdVender.setBackground(new java.awt.Color(224, 229, 243));
+        txtQtdVender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtQtdVender.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtQtdVender.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtQtdVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQtdVenderActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtQtdVender);
+        txtQtdVender.setBounds(150, 140, 310, 48);
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setText("Quantidade");
+        jPanel1.add(jLabel13);
+        jLabel13.setBounds(75, 172, 64, 16);
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel16.setText("Qual o remédio");
+        jPanel1.add(jLabel16);
+        jLabel16.setBounds(50, 100, 85, 16);
+
+        comboRemedioVender.setBackground(new java.awt.Color(224, 229, 243));
+        comboRemedioVender.setForeground(new java.awt.Color(0, 0, 0));
+        comboRemedioVender.setBorder(null);
+        jPanel1.add(comboRemedioVender);
+        comboRemedioVender.setBounds(150, 70, 310, 47);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(601, 340));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtQtdVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdVenderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQtdVenderActionPerformed
+    
+    private void puxarRemedios() {
+        this.conectar.conectaBanco();
+        try {
+            this.conectar.executarSQL(" SELECT id,nome from medicamentos;");
+            while(this.conectar.getResultSet().next()) {
+                ItemCombo itemCombo = new ItemCombo();
+                itemCombo.id = this.conectar.getResultSet().getString(1);
+                itemCombo.nome = this.conectar.getResultSet().getString(2);
+                listaRemedio.add(itemCombo);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro no banco de dados",
+            "Error!", JOptionPane.ERROR_MESSAGE);
+        } finally {
+             this.conectar.fechaBanco();
+        }
+    }
+    
+    private void popularCombo() {
+        for (int i = 0; i < listaRemedio.size(); i++) {
+            String nome = listaRemedio.get(i).nome;
+            comboRemedioVender.addItem(nome);
+        }
+    }
+    
+    
+    private void btnVenderRemedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderRemedioActionPerformed
+        this.conectar.conectaBanco();
+        
+        LocalDate dateObj = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = dateObj.format(formatter);
+        if(txtQtdVender.getText().length() < 0 || Integer.parseInt(txtQtdVender.getText()) <= 0) {
+            JOptionPane.showMessageDialog(null, "Verifique os dados digitados",
+            "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        else {
+            try {
+                String funcionario_id = new TelaLogin().funcionario.getId();
+                String medicamento_id = listaRemedio.get(comboRemedioVender.getSelectedIndex()).id;
+                
+                this.conectar.insertSQL("INSERT into vendas values("+null+",'"+1+"','"+1+"','"+txtQtdVender.getText()+"','"+date+"');");
+                        
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Verifique os dados digitados ou verifique se o remédio foi reposto no inventário",
+                "Error!", JOptionPane.ERROR_MESSAGE);
+            } finally {
+                this.conectar.fechaBanco();
+            }
+        }
+    }//GEN-LAST:event_btnVenderRemedioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +208,11 @@ public class VenderTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVenderRemedio;
+    private javax.swing.JComboBox<String> comboRemedioVender;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txtQtdVender;
     // End of variables declaration//GEN-END:variables
 }

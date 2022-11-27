@@ -4,6 +4,10 @@
  */
 package fabrica.de.projetos;
 
+import conexao.MySQL;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author gabri
@@ -13,8 +17,49 @@ public class VendasTela extends javax.swing.JFrame {
     /**
      * Creates new form VendasTela
      */
+    MySQL conectar = new MySQL("localhost:3306","DataFarmaBanco","root","123mudar");
+    ArrayList<Vendas> listaRemedio = new ArrayList<Vendas>();
     public VendasTela() {
         initComponents();
+        this.puxarVendas();
+        this.popularTable();
+    }
+    
+    private class Vendas {
+        String nome,remedio,quantidade,data,valor;
+    }
+   
+    
+    private void popularTable() {
+        DefaultTableModel tabela = (DefaultTableModel)tableVendas.getModel();
+        
+        for (int i = 0; i < listaRemedio.size(); i++) {
+           
+            String data[] = {listaRemedio.get(i).nome,listaRemedio.get(i).remedio,listaRemedio.get(i).quantidade,listaRemedio.get(i).valor,listaRemedio.get(i).data};
+            tabela.addRow(data);
+        }
+    }
+    
+    private void puxarVendas() {
+        try {
+            this.conectar.conectaBanco();
+            
+            this.conectar.executarSQL("select * from buscarVendas;");
+            while(this.conectar.getResultSet().next()) {
+                Vendas vendasDados = new Vendas();
+                vendasDados.nome = this.conectar.getResultSet().getString(1);
+                vendasDados.remedio = this.conectar.getResultSet().getString(2);
+                vendasDados.valor = this.conectar.getResultSet().getString(3);
+                vendasDados.quantidade = this.conectar.getResultSet().getString(4);
+                vendasDados.data = this.conectar.getResultSet().getString(5);
+                listaRemedio.add(vendasDados);
+                System.out.println(listaRemedio);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            this.conectar.fechaBanco();
+        }
     }
 
     /**
@@ -26,20 +71,45 @@ public class VendasTela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableVendas = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tableVendas.setBackground(new java.awt.Color(255, 255, 255));
+        tableVendas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Remédio", "Quantidade", "Valor", "Data"
+            }
+        ));
+        tableVendas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        tableVendas.setCellSelectionEnabled(true);
+        tableVendas.setEditingColumn(0);
+        tableVendas.setEditingRow(0);
+        tableVendas.setEnabled(false);
+        jScrollPane1.setViewportView(tableVendas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(601, 268));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -78,5 +148,7 @@ public class VendasTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableVendas;
     // End of variables declaration//GEN-END:variables
 }

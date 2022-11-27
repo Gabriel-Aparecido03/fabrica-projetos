@@ -86,7 +86,8 @@ public class ForncedorTela extends javax.swing.JFrame {
                 txtNome.getText().length() > 0 
                 && txtTelefone.getText().length() > 0 
                 && txtEmail.getText().length() > 0 
-                && TxtEndereco.getText().length() > 0
+                && txtCnpj.getText().length() > 0
+                && txtEndereco.getText().length() > 0
                 && txtCep.getText().length() > 0)
         { return true;}
         else {
@@ -96,29 +97,33 @@ public class ForncedorTela extends javax.swing.JFrame {
     
     private void CadastrarFornecedor(Fornecedor novoFornecedor) {
         if(!this.validarDados()) {
-             JOptionPane.showMessageDialog(null, "Verifique os dados inserido",
+            JOptionPane.showMessageDialog(null, "Verifique os dados inserido",
             "Error Database!", JOptionPane.ERROR_MESSAGE);
         }
-        this.conectar.conectaBanco();
+        else {
+            
+            this.conectar.conectaBanco();
         
-        novoFornecedor.setNome(txtNome.getText());
-        novoFornecedor.setTelefone(txtTelefone.getText());
-        novoFornecedor.setEmail(txtEmail.getText());
-        novoFornecedor.setEndereco(TxtEndereco.getText());
-        novoFornecedor.setCnpj(txtCnpj.getText());
-        novoFornecedor.setCep(txtCep.getText());
-        
-        try {
-            this.conectar.insertSQL("INSERT INTO fornecedores values("+null+",'"+novoFornecedor.getNome()+"','"
-                    +novoFornecedor.getTelefone()+"','"
-                    +novoFornecedor.getEmail()+"','"
-                    +novoFornecedor.getCnpj()+"','"
-                    +novoFornecedor.getEndereco()+"','"
-                    +novoFornecedor.getCep()+"');");
-        } catch (Exception e) {
-            System.out.println(e);
-        } finally {
-            System.out.println("Cadastrado com sucesso");
+            novoFornecedor.setNome(txtNome.getText());
+            novoFornecedor.setTelefone(txtTelefone.getText());
+            novoFornecedor.setEmail(txtEmail.getText());
+            novoFornecedor.setEndereco(txtEndereco.getText());
+            novoFornecedor.setCnpj(txtCnpj.getText());
+            novoFornecedor.setCep(txtCep.getText());
+
+            try {
+                this.conectar.insertSQL("INSERT INTO fornecedores values("+null+",'"+novoFornecedor.getNome()+"','"
+                        +novoFornecedor.getTelefone()+"','"
+                        +novoFornecedor.getEmail()+"','"
+                        +novoFornecedor.getCnpj()+"','"
+                        +novoFornecedor.getEndereco()+"','"
+                        +novoFornecedor.getCep()+"');");
+                JOptionPane.showMessageDialog (null, "Cadastrado", "Fornecedor cadastro no banco de dados", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                System.out.println(e);
+            } finally {
+                this.conectar.conectaBanco();
+            }
         }
     };
  
@@ -128,130 +133,214 @@ public class ForncedorTela extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        txtConsultaForn = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        btn_confirmar = new javax.swing.JButton();
+        btnFecharForn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        Tipo2 = new javax.swing.JLabel();
         txtTelefone = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         txtCnpj = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        TxtEndereco = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         txtCep = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        btnSalvarFornecedor = new javax.swing.JButton();
+        txtNome = new javax.swing.JTextField();
+        txtEndereco = new javax.swing.JTextField();
+        btn_confirmar1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 719, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 289, Short.MAX_VALUE)
-        );
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(null);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Procure um fornecedor no sistema");
+        jPanel2.add(jLabel8);
+        jLabel8.setBounds(140, 40, 310, 16);
+
+        txtConsultaForn.setBackground(new java.awt.Color(224, 229, 243));
+        txtConsultaForn.setBorder(null);
+        jPanel2.add(txtConsultaForn);
+        txtConsultaForn.setBounds(70, 100, 460, 60);
+
+        jLabel9.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Digite o nome de um fornecedor");
+        jPanel2.add(jLabel9);
+        jLabel9.setBounds(70, 80, 180, 16);
+
+        btn_confirmar.setBackground(new java.awt.Color(38, 53, 99));
+        btn_confirmar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_confirmar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_confirmar.setText("confirmar");
+        btn_confirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_confirmarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_confirmar);
+        btn_confirmar.setBounds(180, 230, 280, 30);
+
+        btnFecharForn.setBackground(new java.awt.Color(255, 51, 51));
+        btnFecharForn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFecharForn.setForeground(new java.awt.Color(255, 255, 255));
+        btnFecharForn.setText("Fechar");
+        btnFecharForn.setBorder(null);
+        btnFecharForn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharFornActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnFecharForn);
+        btnFecharForn.setBounds(550, 0, 100, 30);
 
         jTabbedPane1.addTab("Consultar", jPanel2);
 
-        jLabel1.setText("Cadastre um fornecedor no sistema");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(null);
 
-        jLabel2.setText("Nome");
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setText("Nome\n");
+        jPanel1.add(jLabel13);
+        jLabel13.setBounds(60, 30, 37, 16);
 
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Telefone");
+        jPanel1.add(jLabel14);
+        jLabel14.setBounds(50, 110, 70, 16);
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("Email");
+        jPanel1.add(jLabel15);
+        jLabel15.setBounds(60, 190, 37, 16);
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel16.setText("Cnpj");
+        jPanel1.add(jLabel16);
+        jLabel16.setBounds(320, 30, 30, 16);
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel17.setText("Endereco");
+        jPanel1.add(jLabel17);
+        jLabel17.setBounds(320, 110, 80, 16);
+
+        Tipo2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Tipo2.setForeground(new java.awt.Color(0, 0, 0));
+        Tipo2.setText("Cep");
+        jPanel1.add(Tipo2);
+        Tipo2.setBounds(330, 190, 30, 16);
+
+        txtTelefone.setBackground(new java.awt.Color(224, 229, 243));
+        txtTelefone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtTelefone.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtTelefone.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefoneActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtTelefone);
+        txtTelefone.setBounds(130, 100, 140, 30);
+
+        txtEmail.setBackground(new java.awt.Color(224, 229, 243));
+        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtEmail.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtEmail.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtEmail);
+        txtEmail.setBounds(100, 180, 170, 30);
+
+        txtCnpj.setBackground(new java.awt.Color(224, 229, 243));
+        txtCnpj.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtCnpj.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtCnpj.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtCnpj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCnpjActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtCnpj);
+        txtCnpj.setBounds(360, 20, 180, 30);
+
+        txtCep.setBackground(new java.awt.Color(224, 229, 243));
+        txtCep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtCep.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtCep.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtCep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCepActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtCep);
+        txtCep.setBounds(390, 180, 140, 30);
+
+        txtNome.setBackground(new java.awt.Color(224, 229, 243));
+        txtNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtNome.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtNome.setSelectionColor(new java.awt.Color(38, 53, 99));
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
             }
         });
+        jPanel1.add(txtNome);
+        txtNome.setBounds(100, 20, 180, 30);
 
-        jLabel3.setText("Telefone");
-
-        jLabel4.setText("Email");
-
-        jLabel5.setText("Cnpj");
-
-        jLabel6.setText("Endereço");
-
-        jLabel7.setText("Cep");
-
-        btnSalvarFornecedor.setText("Salvar no sistema");
-        btnSalvarFornecedor.addActionListener(new java.awt.event.ActionListener() {
+        txtEndereco.setBackground(new java.awt.Color(224, 229, 243));
+        txtEndereco.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtEndereco.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtEndereco.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarFornecedorActionPerformed(evt);
+                txtEnderecoActionPerformed(evt);
             }
         });
+        jPanel1.add(txtEndereco);
+        txtEndereco.setBounds(400, 100, 140, 30);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(262, 262, 262)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(269, 269, 269))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(txtTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(txtNome)
-                    .addComponent(txtEmail))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(txtCnpj)
-                    .addComponent(TxtEndereco)
-                    .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(btnSalvarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TxtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(btnSalvarFornecedor)
-                .addGap(20, 20, 20))
-        );
+        btn_confirmar1.setBackground(new java.awt.Color(38, 53, 99));
+        btn_confirmar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_confirmar1.setForeground(new java.awt.Color(255, 255, 255));
+        btn_confirmar1.setText("confirmar");
+        btn_confirmar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_confirmar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_confirmar1);
+        btn_confirmar1.setBounds(470, 230, 110, 30);
+
+        jButton2.setBackground(new java.awt.Color(255, 51, 51));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Fechar");
+        jButton2.setBorder(null);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(560, 0, 90, 30);
 
         jTabbedPane1.addTab("Cadastrar", jPanel1);
 
@@ -259,25 +348,90 @@ public class ForncedorTela extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        pack();
+        setSize(new java.awt.Dimension(668, 358));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefoneActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCnpjActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCnpjActionPerformed
+
+    private void txtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCepActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCepActionPerformed
 
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
 
-    private void btnSalvarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarFornecedorActionPerformed
+    private void txtEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEnderecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEnderecoActionPerformed
+
+    private void btn_confirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmar1ActionPerformed
         CadastrarFornecedor(novoFornecedor);
-    }//GEN-LAST:event_btnSalvarFornecedorActionPerformed
+    }//GEN-LAST:event_btn_confirmar1ActionPerformed
+
+    private void btn_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmarActionPerformed
+        Fornecedor novoFornecedor = new Fornecedor();
+        
+        if(txtConsultaForn.getText().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Verifique os dados digitados",
+            "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            this.conectar.conectaBanco();
+            try {
+                this.conectar.executarSQL("SELECT nome,telefone,email,cnpj,endereco,cep from fornecedores where nome = "+ "'" + txtConsultaForn.getText()+ "'" + ";");
+                while(this.conectar.getResultSet().next()) {
+                    novoFornecedor.setNome(this.conectar.getResultSet().getString(1));
+                    novoFornecedor.setTelefone(this.conectar.getResultSet().getString(2));
+                    novoFornecedor.setEmail(this.conectar.getResultSet().getString(3));
+                    novoFornecedor.setCnpj(this.conectar.getResultSet().getString(4));
+                    novoFornecedor.setEndereco(this.conectar.getResultSet().getString(5));
+                    novoFornecedor.setCep(this.conectar.getResultSet().getString(6));
+                } 
+                if(novoFornecedor.getNome() == null) {
+                    JOptionPane.showMessageDialog(null, "Verifique os dados digitados",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    ResultadoFornecedor telaResultado = new ResultadoFornecedor();
+                    telaResultado.setCampos(novoFornecedor);
+                    telaResultado.setVisible(true);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            } finally {
+                this.conectar.fechaBanco();
+            }
+        }
+    }//GEN-LAST:event_btn_confirmarActionPerformed
+
+    private void btnFecharFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharFornActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnFecharFornActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,21 +469,26 @@ public class ForncedorTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TxtEndereco;
-    private javax.swing.JButton btnSalvarFornecedor;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel Tipo2;
+    private javax.swing.JButton btnFecharForn;
+    private javax.swing.JButton btn_confirmar;
+    private javax.swing.JButton btn_confirmar1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField txtCep;
     private javax.swing.JTextField txtCnpj;
+    private javax.swing.JTextField txtConsultaForn;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables

@@ -55,6 +55,7 @@ public class MenuTela extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(306, 0, 0, 570);
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(204, 204, 204));
         jPanel2.setPreferredSize(new java.awt.Dimension(300, 0));
 
@@ -74,12 +75,22 @@ public class MenuTela extends javax.swing.JFrame {
         btnFornecedores.setForeground(new java.awt.Color(255, 255, 255));
         btnFornecedores.setText("Fornecedores");
         btnFornecedores.setBorder(null);
+        btnFornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFornecedoresActionPerformed(evt);
+            }
+        });
 
         btnVendas.setBackground(new java.awt.Color(38, 53, 99));
         btnVendas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnVendas.setForeground(new java.awt.Color(255, 255, 255));
         btnVendas.setText("Vendas");
         btnVendas.setBorder(null);
+        btnVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVendasActionPerformed(evt);
+            }
+        });
 
         lbl_modulos.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         lbl_modulos.setText("Modulos");
@@ -185,16 +196,25 @@ public class MenuTela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemediosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemediosActionPerformed
-        // TODO add your handling code here:
+        new RemedioTela().setVisible(true);
     }//GEN-LAST:event_btnRemediosActionPerformed
 
     private void btn_funcionarios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_funcionarios1ActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        new TelaLogin().setVisible(true);
     }//GEN-LAST:event_btn_funcionarios1ActionPerformed
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        // TODO add your handling code here:
+        new VenderTela().setVisible(true);
     }//GEN-LAST:event_btnVenderActionPerformed
+
+    private void btnFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFornecedoresActionPerformed
+        new ForncedorTela().setVisible(true);
+    }//GEN-LAST:event_btnFornecedoresActionPerformed
+
+    private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
+        new VendasTela().setVisible(true);
+    }//GEN-LAST:event_btnVendasActionPerformed
 
     /**
      * @param args the command line arguments

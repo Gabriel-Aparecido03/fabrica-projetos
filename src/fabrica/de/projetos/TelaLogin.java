@@ -238,9 +238,9 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addComponent(lbl_info1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_info2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_error_login)
-                .addGap(2, 2, 2)
+                .addGap(8, 8, 8)
                 .addComponent(lbl_cpf)
                 .addGap(7, 7, 7)
                 .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -297,13 +297,12 @@ public class TelaLogin extends javax.swing.JFrame {
                 funcionario.setSalario(this.conectar.getResultSet().getString(6));
                 funcionario.setSenha(this.conectar.getResultSet().getString(7));
             }
-        } catch (Exception e) {
-        } finally {
-            System.out.println(funcionario.getSenha());
+            
             if(funcionario.getSenha().equals(txt_password.getText()) && funcionario.getCpf().equals(txt_cpf.getText())) {
                 menuTela.setVisible(true);
                 this.setVisible(false);
             }
+            
             else {
                 txt_password.setBorder(borderError);
                 txt_cpf.setBorder(borderError);
@@ -311,6 +310,9 @@ public class TelaLogin extends javax.swing.JFrame {
                 txt_cpf.setText("");
                 txt_password.setText("");
             }
+        } catch (Exception e) {
+        } finally {
+            this.conectar.fechaBanco();
         }
     }//GEN-LAST:event_btn_confirmarActionPerformed
 

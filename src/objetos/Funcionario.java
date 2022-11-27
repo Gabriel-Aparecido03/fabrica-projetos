@@ -67,4 +67,14 @@ public class Funcionario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    public void reset() {
+        this.senha = "";
+        this.cargo = "";
+        this.cpf = "";
+        this.data_nasc = "";
+        this.nome = "";
+        this.id = "";
+        this.salario = "";
+    }
 }

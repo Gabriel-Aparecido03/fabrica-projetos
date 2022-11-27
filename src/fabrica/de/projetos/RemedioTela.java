@@ -4,17 +4,45 @@
  */
 package fabrica.de.projetos;
 
+import conexao.MySQL;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import objetos.Medicamentos;
+
 /**
  *
  * @author gabri
  */
 public class RemedioTela extends javax.swing.JFrame {
-
+    MySQL conectar = new MySQL("localhost:3306","DataFarmaBanco","root","123mudar");
+    ArrayList<String> listaForn = new ArrayList<String>();
     /**
      * Creates new form RemedioTela
      */
     public RemedioTela() {
         initComponents();
+        gettingListOfFrn();
+        popularComboBox();
+    }
+    
+    private void popularComboBox() {
+        for (int i = 0; i < this.listaForn.size(); i++) {
+            comboFornecedorRemedio.addItem(this.listaForn.get(i));
+        }
+    }
+    
+    private void gettingListOfFrn() {
+        this.conectar.conectaBanco();
+        try {
+            this.conectar.executarSQL("SELECT nome from fornecedores");
+            while(this.conectar.getResultSet().next()){
+                this.listaForn.add(this.conectar.getResultSet().getString(1));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            this.conectar.conectaBanco();
+        }
     }
 
     /**
@@ -35,34 +63,29 @@ public class RemedioTela extends javax.swing.JFrame {
         txt_cpf5 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        panel2 = new java.awt.Panel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        Tipo1 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        panel3 = new java.awt.Panel();
         panel1 = new java.awt.Panel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        Tipo = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        txt_cpf4 = new javax.swing.JTextField();
-        txt_cpf6 = new javax.swing.JTextField();
-        txt_cpf8 = new javax.swing.JTextField();
-        txt_cpf9 = new javax.swing.JTextField();
-        btn_confirmar = new javax.swing.JButton();
+        bntPesquisarMedicamento = new javax.swing.JButton();
+        txtConsultaMedic = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        panel2 = new java.awt.Panel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        Tipo2 = new javax.swing.JLabel();
+        comboTipoRemedio = new javax.swing.JComboBox<>();
+        comboFornecedorRemedio = new javax.swing.JComboBox<>();
+        txtPrecoRemedio = new javax.swing.JTextField();
+        txtNomeRemedio = new javax.swing.JTextField();
+        txtPesoRemedio = new javax.swing.JTextField();
+        btn_confirmar1 = new javax.swing.JButton();
+        comboTarjaRemedio = new javax.swing.JComboBox<>();
+        btnFecharForn = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        txtQtdRemedio = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -117,163 +140,190 @@ public class RemedioTela extends javax.swing.JFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        panel2.setLayout(null);
-
-        jLabel8.setText("Nome\n");
-        panel2.add(jLabel8);
-        jLabel8.setBounds(100, 60, 37, 16);
-
-        jTextField6.setText("jTextField1");
-        panel2.add(jTextField6);
-        jTextField6.setBounds(140, 60, 71, 22);
-
-        jLabel9.setText("Fornecedor\n");
-        panel2.add(jLabel9);
-        jLabel9.setBounds(100, 110, 60, 16);
-
-        jTextField7.setText("jTextField2");
-        panel2.add(jTextField7);
-        jTextField7.setBounds(170, 110, 71, 22);
-
-        jLabel10.setText("Preço");
-        panel2.add(jLabel10);
-        jLabel10.setBounds(100, 160, 37, 16);
-
-        jTextField8.setText("jTextField3");
-        panel2.add(jTextField8);
-        jTextField8.setBounds(140, 160, 71, 22);
-
-        jLabel11.setText("Tarja");
-        panel2.add(jLabel11);
-        jLabel11.setBounds(320, 60, 30, 16);
-
-        jLabel12.setText("Peso Líquido");
-        panel2.add(jLabel12);
-        jLabel12.setBounds(320, 110, 68, 16);
-
-        jTextField9.setText("jTextField5");
-        panel2.add(jTextField9);
-        jTextField9.setBounds(390, 110, 71, 22);
-
-        Tipo1.setText("Tipo");
-        panel2.add(Tipo1);
-        Tipo1.setBounds(320, 160, 30, 16);
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comprimido", "Gota" }));
-        panel2.add(jComboBox3);
-        jComboBox3.setBounds(350, 160, 120, 22);
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livre", "Vermelha", "Preta" }));
-        panel2.add(jComboBox4);
-        jComboBox4.setBounds(350, 60, 84, 22);
-
-        jTabbedPane1.addTab("Cadastro", panel2);
-
-        javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
-        panel3.setLayout(panel3Layout);
-        panel3Layout.setHorizontalGroup(
-            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
-        panel3Layout.setVerticalGroup(
-            panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 297, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab3", panel3);
-
         panel1.setLayout(null);
 
-        jLabel3.setText("Nome\n");
-        panel1.add(jLabel3);
-        jLabel3.setBounds(60, 40, 37, 16);
-
-        jLabel4.setText("Fornecedor\n");
-        panel1.add(jLabel4);
-        jLabel4.setBounds(60, 120, 60, 16);
-
-        jLabel5.setText("Preço");
-        panel1.add(jLabel5);
-        jLabel5.setBounds(60, 200, 37, 16);
-
-        jLabel6.setText("Tarja");
-        panel1.add(jLabel6);
-        jLabel6.setBounds(320, 40, 30, 16);
-
-        jLabel7.setText("Peso Líquido");
-        panel1.add(jLabel7);
-        jLabel7.setBounds(320, 120, 68, 16);
-
-        Tipo.setText("Tipo");
-        panel1.add(Tipo);
-        Tipo.setBounds(320, 200, 30, 16);
-
-        jComboBox1.setBackground(new java.awt.Color(224, 229, 243));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comprimido", "Gota" }));
-        panel1.add(jComboBox1);
-        jComboBox1.setBounds(360, 190, 180, 30);
-
-        jComboBox2.setBackground(new java.awt.Color(224, 229, 243));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livre", "Vermelha", "Preta" }));
-        panel1.add(jComboBox2);
-        jComboBox2.setBounds(380, 30, 160, 30);
-
-        txt_cpf4.setBackground(new java.awt.Color(224, 229, 243));
-        txt_cpf4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
-        txt_cpf4.setCaretColor(new java.awt.Color(38, 53, 99));
-        txt_cpf4.setSelectionColor(new java.awt.Color(38, 53, 99));
-        txt_cpf4.addActionListener(new java.awt.event.ActionListener() {
+        bntPesquisarMedicamento.setBackground(new java.awt.Color(38, 53, 99));
+        bntPesquisarMedicamento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bntPesquisarMedicamento.setForeground(new java.awt.Color(255, 255, 255));
+        bntPesquisarMedicamento.setText("confirmar");
+        bntPesquisarMedicamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_cpf4ActionPerformed(evt);
+                bntPesquisarMedicamentoActionPerformed(evt);
             }
         });
-        panel1.add(txt_cpf4);
-        txt_cpf4.setBounds(130, 110, 140, 30);
+        panel1.add(bntPesquisarMedicamento);
+        bntPesquisarMedicamento.setBounds(180, 230, 280, 30);
 
-        txt_cpf6.setBackground(new java.awt.Color(224, 229, 243));
-        txt_cpf6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
-        txt_cpf6.setCaretColor(new java.awt.Color(38, 53, 99));
-        txt_cpf6.setSelectionColor(new java.awt.Color(38, 53, 99));
-        txt_cpf6.addActionListener(new java.awt.event.ActionListener() {
+        txtConsultaMedic.setBackground(new java.awt.Color(224, 229, 243));
+        txtConsultaMedic.setBorder(null);
+        panel1.add(txtConsultaMedic);
+        txtConsultaMedic.setBounds(80, 110, 450, 60);
+
+        jLabel9.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Digite o nome de um remédio");
+        panel1.add(jLabel9);
+        jLabel9.setBounds(80, 90, 180, 16);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Procure um remédio no sistema");
+        panel1.add(jLabel8);
+        jLabel8.setBounds(150, 30, 310, 16);
+
+        jButton3.setBackground(new java.awt.Color(255, 51, 51));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Fechar");
+        jButton3.setBorder(null);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_cpf6ActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
-        panel1.add(txt_cpf6);
-        txt_cpf6.setBounds(100, 190, 170, 30);
-
-        txt_cpf8.setBackground(new java.awt.Color(224, 229, 243));
-        txt_cpf8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
-        txt_cpf8.setCaretColor(new java.awt.Color(38, 53, 99));
-        txt_cpf8.setSelectionColor(new java.awt.Color(38, 53, 99));
-        txt_cpf8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_cpf8ActionPerformed(evt);
-            }
-        });
-        panel1.add(txt_cpf8);
-        txt_cpf8.setBounds(100, 30, 170, 30);
-
-        txt_cpf9.setBackground(new java.awt.Color(224, 229, 243));
-        txt_cpf9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
-        txt_cpf9.setCaretColor(new java.awt.Color(38, 53, 99));
-        txt_cpf9.setSelectionColor(new java.awt.Color(38, 53, 99));
-        txt_cpf9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_cpf9ActionPerformed(evt);
-            }
-        });
-        panel1.add(txt_cpf9);
-        txt_cpf9.setBounds(400, 110, 140, 30);
-
-        btn_confirmar.setBackground(new java.awt.Color(38, 53, 99));
-        btn_confirmar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_confirmar.setForeground(new java.awt.Color(255, 255, 255));
-        btn_confirmar.setText("confirmar");
-        panel1.add(btn_confirmar);
-        btn_confirmar.setBounds(460, 250, 110, 30);
+        panel1.add(jButton3);
+        jButton3.setBounds(520, 0, 80, 30);
 
         jTabbedPane1.addTab("Consulta", panel1);
+
+        panel2.setLayout(null);
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setText("Nome\n");
+        panel2.add(jLabel13);
+        jLabel13.setBounds(60, 80, 37, 16);
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Fornecedor\n");
+        panel2.add(jLabel14);
+        jLabel14.setBounds(50, 140, 70, 16);
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("Preço");
+        panel2.add(jLabel15);
+        jLabel15.setBounds(60, 200, 37, 16);
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel16.setText("Tarja");
+        panel2.add(jLabel16);
+        jLabel16.setBounds(320, 80, 30, 16);
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel17.setText("Peso Líquido");
+        panel2.add(jLabel17);
+        jLabel17.setBounds(320, 140, 80, 16);
+
+        Tipo2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Tipo2.setForeground(new java.awt.Color(0, 0, 0));
+        Tipo2.setText("Tipo");
+        panel2.add(Tipo2);
+        Tipo2.setBounds(320, 200, 30, 16);
+
+        comboTipoRemedio.setBackground(new java.awt.Color(224, 229, 243));
+        comboTipoRemedio.setForeground(new java.awt.Color(0, 0, 0));
+        comboTipoRemedio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comprimido", "Gota" }));
+        comboTipoRemedio.setBorder(null);
+        panel2.add(comboTipoRemedio);
+        comboTipoRemedio.setBounds(360, 190, 180, 30);
+
+        comboFornecedorRemedio.setBackground(new java.awt.Color(224, 229, 243));
+        comboFornecedorRemedio.setForeground(new java.awt.Color(0, 0, 0));
+        comboFornecedorRemedio.setBorder(null);
+        panel2.add(comboFornecedorRemedio);
+        comboFornecedorRemedio.setBounds(120, 130, 160, 30);
+
+        txtPrecoRemedio.setBackground(new java.awt.Color(224, 229, 243));
+        txtPrecoRemedio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtPrecoRemedio.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtPrecoRemedio.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtPrecoRemedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecoRemedioActionPerformed(evt);
+            }
+        });
+        panel2.add(txtPrecoRemedio);
+        txtPrecoRemedio.setBounds(100, 190, 170, 30);
+
+        txtNomeRemedio.setBackground(new java.awt.Color(224, 229, 243));
+        txtNomeRemedio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtNomeRemedio.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtNomeRemedio.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtNomeRemedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeRemedioActionPerformed(evt);
+            }
+        });
+        panel2.add(txtNomeRemedio);
+        txtNomeRemedio.setBounds(100, 70, 180, 30);
+
+        txtPesoRemedio.setBackground(new java.awt.Color(224, 229, 243));
+        txtPesoRemedio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtPesoRemedio.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtPesoRemedio.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtPesoRemedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesoRemedioActionPerformed(evt);
+            }
+        });
+        panel2.add(txtPesoRemedio);
+        txtPesoRemedio.setBounds(400, 130, 140, 30);
+
+        btn_confirmar1.setBackground(new java.awt.Color(38, 53, 99));
+        btn_confirmar1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_confirmar1.setForeground(new java.awt.Color(255, 255, 255));
+        btn_confirmar1.setText("confirmar");
+        btn_confirmar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_confirmar1ActionPerformed(evt);
+            }
+        });
+        panel2.add(btn_confirmar1);
+        btn_confirmar1.setBounds(460, 260, 110, 30);
+
+        comboTarjaRemedio.setBackground(new java.awt.Color(224, 229, 243));
+        comboTarjaRemedio.setForeground(new java.awt.Color(0, 0, 0));
+        comboTarjaRemedio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livre", "Vermelha", "Preta" }));
+        comboTarjaRemedio.setBorder(null);
+        panel2.add(comboTarjaRemedio);
+        comboTarjaRemedio.setBounds(380, 70, 160, 30);
+
+        btnFecharForn.setBackground(new java.awt.Color(255, 51, 51));
+        btnFecharForn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFecharForn.setForeground(new java.awt.Color(255, 255, 255));
+        btnFecharForn.setText("Fechar");
+        btnFecharForn.setBorder(null);
+        btnFecharForn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharFornActionPerformed(evt);
+            }
+        });
+        panel2.add(btnFecharForn);
+        btnFecharForn.setBounds(520, 0, 80, 30);
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel18.setText("Quantidade");
+        panel2.add(jLabel18);
+        jLabel18.setBounds(60, 250, 70, 16);
+
+        txtQtdRemedio.setBackground(new java.awt.Color(224, 229, 243));
+        txtQtdRemedio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(224, 229, 243), 2));
+        txtQtdRemedio.setCaretColor(new java.awt.Color(38, 53, 99));
+        txtQtdRemedio.setSelectionColor(new java.awt.Color(38, 53, 99));
+        txtQtdRemedio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQtdRemedioActionPerformed(evt);
+            }
+        });
+        panel2.add(txtQtdRemedio);
+        txtQtdRemedio.setBounds(140, 240, 130, 30);
+
+        jTabbedPane1.addTab("Cadastro", panel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -283,39 +333,133 @@ public class RemedioTela extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(616, 388));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_cpf2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cpf2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_cpf2ActionPerformed
 
-    private void txt_cpf4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cpf4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_cpf4ActionPerformed
-
     private void txt_cpf5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cpf5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_cpf5ActionPerformed
-
-    private void txt_cpf6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cpf6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_cpf6ActionPerformed
 
     private void txt_cpf7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cpf7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_cpf7ActionPerformed
 
-    private void txt_cpf8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cpf8ActionPerformed
+    private void txtPrecoRemedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoRemedioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_cpf8ActionPerformed
+    }//GEN-LAST:event_txtPrecoRemedioActionPerformed
 
-    private void txt_cpf9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cpf9ActionPerformed
+    private void txtNomeRemedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeRemedioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_cpf9ActionPerformed
+    }//GEN-LAST:event_txtNomeRemedioActionPerformed
+
+    private void txtPesoRemedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesoRemedioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPesoRemedioActionPerformed
+
+    private void bntPesquisarMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntPesquisarMedicamentoActionPerformed
+        
+        Medicamentos novoMedicamento = new Medicamentos();
+        
+        if(txtConsultaMedic.getText().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Verifique os dados digitados",
+            "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            this.conectar.conectaBanco();
+            try {
+                this.conectar.executarSQL("SELECT nome,tarja,preco,peso_liquido,tipo,qtd_estoque,forncedor_id from medicamentos where nome = "+ "'" + txtConsultaMedic.getText()+ "'" + ";");
+                while(this.conectar.getResultSet().next()) {
+                    System.out.println(this.conectar.getResultSet().getString(1));
+                    novoMedicamento.setNome(this.conectar.getResultSet().getString(1));
+                    novoMedicamento.setTarja(this.conectar.getResultSet().getString(2));
+                    novoMedicamento.setPreco(Float.parseFloat(this.conectar.getResultSet().getString(3)));
+                    novoMedicamento.setPeso(Integer.parseInt(this.conectar.getResultSet().getString(4)));
+                    novoMedicamento.setTipo(this.conectar.getResultSet().getString(5));
+                    novoMedicamento.setQtd_estoque(Integer.parseInt(this.conectar.getResultSet().getString(6)));
+                    novoMedicamento.setFornecedorId(Integer.parseInt(this.conectar.getResultSet().getString(7)));
+                } 
+                
+                if(novoMedicamento.getNome() == null) {
+                    JOptionPane.showMessageDialog(null, "Verifique os dados digitados",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    System.out.println("asdddddadakljhdkaljhdlakhdlkjashdlkhaskljdh");
+                    ResultadoRemedio telaResultado = new ResultadoRemedio();
+                    telaResultado.setVisible(true);
+                    telaResultado.setNovoRemedio(novoMedicamento);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                System.out.println("errrr");
+            } finally {
+                this.conectar.fechaBanco();
+            }
+        }
+    }//GEN-LAST:event_bntPesquisarMedicamentoActionPerformed
+
+    
+    private boolean validarCampos() {
+        if(txtNomeRemedio.getText().length() > 0 && txtPesoRemedio.getText().length() > 0 && txtPrecoRemedio.getText().length() > 0 && ( Integer.parseInt(txtPrecoRemedio.getText()) > 0 ) && txtQtdRemedio.getText().length() > 0 && ( Integer.parseInt(txtQtdRemedio.getText()) > 0 )) {
+            return true;
+        }
+        return false;
+    }
+    
+    private void btn_confirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmar1ActionPerformed
+        if(!validarCampos()) {
+            JOptionPane.showMessageDialog(null, "Verifique os dados digitados",
+            "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            this.conectar.conectaBanco();
+            Medicamentos novoMedicamento = new Medicamentos();
+            
+            novoMedicamento.setNome(txtNomeRemedio.getText());
+            novoMedicamento.setTarja(comboTarjaRemedio.getSelectedItem().toString());
+            novoMedicamento.setPreco(Float.parseFloat(txtPrecoRemedio.getText()));
+            novoMedicamento.setPeso(Integer.parseInt(txtPesoRemedio.getText()));
+            novoMedicamento.setTipo(comboTipoRemedio.getSelectedItem().toString());
+            novoMedicamento.setQtd_estoque(Integer.parseInt(txtQtdRemedio.getText()));
+            novoMedicamento.setFornecedorId(comboFornecedorRemedio.getSelectedIndex() + 1);
+            
+            try {
+               this.conectar.insertSQL("INSERT INTO medicamentos values("+null+",'"+novoMedicamento.getNome()+"','"
+                        +novoMedicamento.getTarja()+"','"
+                        +novoMedicamento.getPreco()+"','"
+                        +novoMedicamento.getPeso()+"','"
+                        +novoMedicamento.getTipo()+"','"
+                        +novoMedicamento.getQtd_estoque()+"','"
+                        +novoMedicamento.getFornecedorId()+"');");
+               JOptionPane.showMessageDialog (null, "Medicamento adicionado com sucesso", "Cadastrado", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Verifique os dados digitados",
+                "Error!", JOptionPane.ERROR_MESSAGE);
+            } finally {
+                this.conectar.fechaBanco();
+            }
+        }
+    }//GEN-LAST:event_btn_confirmar1ActionPerformed
+
+    private void btnFecharFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharFornActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnFecharFornActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtQtdRemedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdRemedioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtQtdRemedioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,42 +497,37 @@ public class RemedioTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Tipo;
-    private javax.swing.JLabel Tipo1;
-    private javax.swing.JButton btn_confirmar;
+    private javax.swing.JLabel Tipo2;
+    private javax.swing.JButton bntPesquisarMedicamento;
+    private javax.swing.JButton btnFecharForn;
+    private javax.swing.JButton btn_confirmar1;
+    private javax.swing.JComboBox<String> comboFornecedorRemedio;
+    private javax.swing.JComboBox<String> comboTarjaRemedio;
+    private javax.swing.JComboBox<String> comboTipoRemedio;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private java.awt.Panel panel1;
     private java.awt.Panel panel2;
-    private java.awt.Panel panel3;
+    private javax.swing.JTextField txtConsultaMedic;
+    private javax.swing.JTextField txtNomeRemedio;
+    private javax.swing.JTextField txtPesoRemedio;
+    private javax.swing.JTextField txtPrecoRemedio;
+    private javax.swing.JTextField txtQtdRemedio;
     private javax.swing.JTextField txt_cpf2;
-    private javax.swing.JTextField txt_cpf4;
     private javax.swing.JTextField txt_cpf5;
-    private javax.swing.JTextField txt_cpf6;
     private javax.swing.JTextField txt_cpf7;
-    private javax.swing.JTextField txt_cpf8;
-    private javax.swing.JTextField txt_cpf9;
     // End of variables declaration//GEN-END:variables
 }
