@@ -22,6 +22,8 @@ public class VenderTela extends javax.swing.JFrame {
         String nome;
     }
     
+    public String funcionario_id = "";
+    
     MySQL conectar = new MySQL("localhost:3306","DataFarmaBanco","root","123mudar");
     
     ArrayList<ItemCombo> listaRemedio = new ArrayList<ItemCombo>();
@@ -51,6 +53,7 @@ public class VenderTela extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         comboRemedioVender = new javax.swing.JComboBox<>();
+        btnFecharForn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +102,19 @@ public class VenderTela extends javax.swing.JFrame {
         comboRemedioVender.setBorder(null);
         jPanel1.add(comboRemedioVender);
         comboRemedioVender.setBounds(150, 70, 310, 47);
+
+        btnFecharForn.setBackground(new java.awt.Color(255, 51, 51));
+        btnFecharForn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFecharForn.setForeground(new java.awt.Color(255, 255, 255));
+        btnFecharForn.setText("Fechar");
+        btnFecharForn.setBorder(null);
+        btnFecharForn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharFornActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnFecharForn);
+        btnFecharForn.setBounds(510, 0, 80, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,11 +174,11 @@ public class VenderTela extends javax.swing.JFrame {
         
         else {
             try {
-                String funcionario_id = new TelaLogin().funcionario.getId();
-                String medicamento_id = listaRemedio.get(comboRemedioVender.getSelectedIndex()).id;
                 
-                this.conectar.insertSQL("INSERT into vendas values("+null+",'"+1+"','"+1+"','"+txtQtdVender.getText()+"','"+date+"');");
-                        
+                System.out.println(this.funcionario_id);
+                
+                this.conectar.insertSQL("INSERT into vendas values("+null+",'"+1+"','"+listaRemedio.get(comboRemedioVender.getSelectedIndex()).id+"','"+txtQtdVender.getText()+"','"+date+"');");
+                this.setVisible(false);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Verifique os dados digitados ou verifique se o remédio foi reposto no inventário",
                 "Error!", JOptionPane.ERROR_MESSAGE);
@@ -171,6 +187,10 @@ public class VenderTela extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnVenderRemedioActionPerformed
+
+    private void btnFecharFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharFornActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnFecharFornActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,6 +228,7 @@ public class VenderTela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFecharForn;
     private javax.swing.JButton btnVenderRemedio;
     private javax.swing.JComboBox<String> comboRemedioVender;
     private javax.swing.JLabel jLabel13;

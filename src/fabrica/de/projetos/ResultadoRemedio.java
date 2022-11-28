@@ -85,6 +85,7 @@ public class ResultadoRemedio extends javax.swing.JFrame {
         comboEditMedcTarja = new javax.swing.JComboBox<>();
         txtEditMedcQtd = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
+        btnFecharForn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -108,7 +109,7 @@ public class ResultadoRemedio extends javax.swing.JFrame {
             }
         });
         jPanel1.add(bntApagarMedicamento);
-        bntApagarMedicamento.setBounds(40, 270, 230, 30);
+        bntApagarMedicamento.setBounds(60, 270, 230, 30);
 
         btn_confirmar2.setBackground(new java.awt.Color(38, 53, 99));
         btn_confirmar2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -167,7 +168,6 @@ public class ResultadoRemedio extends javax.swing.JFrame {
 
         comboEditMedcForn.setBackground(new java.awt.Color(224, 229, 243));
         comboEditMedcForn.setForeground(new java.awt.Color(0, 0, 0));
-        comboEditMedcForn.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Livre", "Vermelha", "Preta" }));
         comboEditMedcForn.setBorder(null);
         jPanel1.add(comboEditMedcForn);
         comboEditMedcForn.setBounds(120, 110, 160, 30);
@@ -233,6 +233,19 @@ public class ResultadoRemedio extends javax.swing.JFrame {
         jLabel18.setText("Quantidade");
         jPanel1.add(jLabel18);
         jLabel18.setBounds(60, 230, 80, 16);
+
+        btnFecharForn.setBackground(new java.awt.Color(255, 51, 51));
+        btnFecharForn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFecharForn.setForeground(new java.awt.Color(255, 255, 255));
+        btnFecharForn.setText("Fechar");
+        btnFecharForn.setBorder(null);
+        btnFecharForn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharFornActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnFecharForn);
+        btnFecharForn.setBounds(510, 0, 80, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -307,7 +320,7 @@ public class ResultadoRemedio extends javax.swing.JFrame {
                 novoMedicamento.setFornecedorId(comboEditMedcForn.getSelectedIndex() + 1);
                 
                 this.conectar.updateSQL("UPDATE medicamentos SET  nome ="+"'"+novoMedicamento.getNome()+"'"
-                        +", tarja ="+"'"+novoMedicamento.getTarja()+"'"+", preco = "+"'"+novoMedicamento.getPreco()+"'"+", peso_liquido ="+"'"+novoMedicamento.getPeso()+"'"+", tipo ="+"'"+novoMedicamento.getTipo()+"'"+", qtd_estoque ="+"'"+novoMedicamento.getQtd_estoque()+"'"+ ", forncedor_id ="+"'"+novoMedicamento.getFornecedorId()+"'"+" where nome = "+"'"+novoMedicamento.getNome()+"'"+";");
+                        +", tarja ="+"'"+novoMedicamento.getTarja()+"'"+", preco = "+"'"+novoMedicamento.getPreco()+"'"+", peso_liquido ="+"'"+novoMedicamento.getPeso()+"'"+", tipo ="+"'"+novoMedicamento.getTipo()+"'"+", qtd_estoque ="+"'"+novoMedicamento.getQtd_estoque()+"'"+ ", fornecedor_id ="+"'"+novoMedicamento.getFornecedorId()+"'"+" where nome = "+"'"+novoMedicamento.getNome()+"'"+";");
                 JOptionPane.showMessageDialog (null, "Editado", " editado do banco de dados", JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
             } catch (Exception e) {
@@ -319,6 +332,10 @@ public class ResultadoRemedio extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btn_confirmar2ActionPerformed
+
+    private void btnFecharFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharFornActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnFecharFornActionPerformed
 
     /**
      * @param args the command line arguments
@@ -359,6 +376,7 @@ public class ResultadoRemedio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Tipo2;
     private javax.swing.JButton bntApagarMedicamento;
+    private javax.swing.JButton btnFecharForn;
     private javax.swing.JButton btn_confirmar2;
     private javax.swing.JComboBox<String> comboEditMedcForn;
     private javax.swing.JComboBox<String> comboEditMedcTarja;

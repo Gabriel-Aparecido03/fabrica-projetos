@@ -15,7 +15,7 @@ import objetos.Medicamentos;
  */
 public class RemedioTela extends javax.swing.JFrame {
     MySQL conectar = new MySQL("localhost:3306","DataFarmaBanco","root","123mudar");
-    ArrayList<String> listaForn = new ArrayList<String>();
+    ArrayList<FornecedorCombo> listaForn = new ArrayList<FornecedorCombo>();
     /**
      * Creates new form RemedioTela
      */
@@ -25,18 +25,25 @@ public class RemedioTela extends javax.swing.JFrame {
         popularComboBox();
     }
     
+    class FornecedorCombo {
+        String nome,id;
+    }
+    
     private void popularComboBox() {
         for (int i = 0; i < this.listaForn.size(); i++) {
-            comboFornecedorRemedio.addItem(this.listaForn.get(i));
+            comboFornecedorRemedio.addItem(this.listaForn.get(i).nome);
         }
     }
     
     private void gettingListOfFrn() {
         this.conectar.conectaBanco();
         try {
-            this.conectar.executarSQL("SELECT nome from fornecedores");
+            this.conectar.executarSQL("SELECT nome,id from fornecedores");
             while(this.conectar.getResultSet().next()){
-                this.listaForn.add(this.conectar.getResultSet().getString(1));
+                FornecedorCombo novoFornecedor = new FornecedorCombo();
+                novoFornecedor.nome = this.conectar.getResultSet().getString(1);
+                novoFornecedor.id = this.conectar.getResultSet().getString(2);
+                listaForn.add(novoFornecedor);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -375,7 +382,7 @@ public class RemedioTela extends javax.swing.JFrame {
         else {
             this.conectar.conectaBanco();
             try {
-                this.conectar.executarSQL("SELECT nome,tarja,preco,peso_liquido,tipo,qtd_estoque,forncedor_id from medicamentos where nome = "+ "'" + txtConsultaMedic.getText()+ "'" + ";");
+                this.conectar.executarSQL("SELECT nome,tarja,preco,peso_liquido,tipo,qtd_estoque,fornecedor_id from medicamentos where nome = "+ "'" + txtConsultaMedic.getText()+ "'" + ";");
                 while(this.conectar.getResultSet().next()) {
                     System.out.println(this.conectar.getResultSet().getString(1));
                     novoMedicamento.setNome(this.conectar.getResultSet().getString(1));
@@ -392,7 +399,6 @@ public class RemedioTela extends javax.swing.JFrame {
                     "Error!", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    System.out.println("asdddddadakljhdkaljhdlakhdlkjashdlkhaskljdh");
                     ResultadoRemedio telaResultado = new ResultadoRemedio();
                     telaResultado.setVisible(true);
                     telaResultado.setNovoRemedio(novoMedicamento);
@@ -429,7 +435,7 @@ public class RemedioTela extends javax.swing.JFrame {
             novoMedicamento.setPeso(Integer.parseInt(txtPesoRemedio.getText()));
             novoMedicamento.setTipo(comboTipoRemedio.getSelectedItem().toString());
             novoMedicamento.setQtd_estoque(Integer.parseInt(txtQtdRemedio.getText()));
-            novoMedicamento.setFornecedorId(comboFornecedorRemedio.getSelectedIndex() + 1);
+            novoMedicamento.setFornecedorId(Integer.parseInt(listaForn.get(comboFornecedorRemedio.getSelectedIndex()).id));
             
             try {
                this.conectar.insertSQL("INSERT INTO medicamentos values("+null+",'"+novoMedicamento.getNome()+"','"
@@ -454,7 +460,7 @@ public class RemedioTela extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFecharFornActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txtQtdRemedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtdRemedioActionPerformed
